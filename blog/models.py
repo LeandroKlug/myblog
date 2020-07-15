@@ -33,6 +33,9 @@ class Post(models.Model):
     def get_absolute_url_update(self):
         return reverse('post_edit', args=[self.pk])
 
+    def get_absolute_url_delete(self):
+        return reverse('post_delete', args=[self.pk])
+
     class Meta:
         ordering = ('-publicado',)
 

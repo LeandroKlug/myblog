@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, UpdateView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import CreateView
 from . models import Post
 
@@ -23,22 +24,8 @@ class BlogUpdateView(UpdateView):
     template_name = 'blog/post_edit.html'
     fields = ('title', 'context')
 
-    """
-    STATUS  = (
-        ('rascunho', 'Rascunho'),
-        ('publicado', 'Publicado'),
-    )
-    title   = models.CharField(max_length=250)
-    slug    = models.SlugField(max_length=250)
-    author  = models.ForeignKey(User,
-                                on_delete=models.CASCADE)
-    context = models.TextField() 
-    publicado= models.DateTimeField(default=timezone.now)
-    criado  = models.DateTimeField(auto_now_add=True)
-    alterado= models.DateTimeField(auto_now=True)
-    status  = models.CharField(max_length=10,
-                                choices=STATUS,
-                                default='rascunhos')
-    objects = models.Manager()
-    published= PublishedManager()
-    """
+class BlogDeleteView(DeleteView):
+    model = Post
+    template_name = 'blog/post_delete.html'
+    success_url = reverse_lazy('home')
+
