@@ -4,7 +4,8 @@
 
 {% block content %}
         <div class="post-entry">
-            <h2>{{custom.title}}</h2>
-            <p>{{custom.context}}</p>
+            <h2>{{object.title}}</h2>
+            <p>{{object.context}}</p>
         </div>
+        <a href="{{ object.get_absolute_url_update }}">Editar Postagem</a>
 {% endblock content %}
