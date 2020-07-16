@@ -2,6 +2,9 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
+from django.utils.text import slugify
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -40,5 +43,10 @@ class Post(models.Model):
         ordering = ('-publicado',)
 
     def __str__(self):
-        return '{} - {}'.format(self.title,self.author)
+        return self.title
 
+@receiver(post_save, sender=Post)
+def insert_slug(sender, instance, **kwargs):
+    if not instance.slug:
+        instance.slug = slugify(instance.title)
+        return instance.save()
